@@ -27,7 +27,7 @@ function resizeImage(imgName, width, height) {
                 .toFile(imgResizedLocation);
         }
         catch (err) {
-            throw new Error('could not resize the image');
+            return 'problem while resizing image';
         }
         return resizedImageName;
     });

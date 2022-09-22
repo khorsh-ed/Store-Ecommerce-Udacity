@@ -21,7 +21,7 @@ const imageProcessing = async(req: express.Request, res: express.Response, next:
     // handling cashing check if it is already included in cashed folder
     if(thumbFileNames.includes(`${imageName}_${imageWidth}_${imageHeight}`))
     {
-       next();
+       return next();
     }
     // resizing the image 
     await resizeImage(imageName, +imageWidth,+imageHeight);

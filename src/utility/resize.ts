@@ -17,7 +17,7 @@ async function resizeImage(imgName: string , width:number , height:number) :Prom
       .toFile(imgResizedLocation);
     }
     catch(err) {
-        throw new Error('could not resize the image')
+        return 'problem while resizing image';
       }
 
       return resizedImageName;
