@@ -12,8 +12,8 @@ images.get('/', [validator_1.default, imgprocessing_1.default], (req, res) => {
     const imageName = req.query.name;
     const imageWidth = req.query.width;
     const imageHeight = req.query.height;
-    const imgLocation = path_1.default.resolve('./') + `/src/assets/full/${imageName}.jpg`;
-    const imgResizedLocation = path_1.default.resolve('./') + `/src/assets/thumb/${imageName}_${imageWidth}_${imageHeight}.jpg`;
+    const imgResizedLocation = path_1.default.resolve('./') +
+        `/src/assets/thumb/${imageName}_${imageWidth}_${imageHeight}.jpg`;
     return res.sendFile(imgResizedLocation);
 });
 exports.default = images;

@@ -26,27 +26,37 @@ describe('Testing the images endpoint', () => {
         yield request.get('/api/images?name=fjord&width=300').expect(400);
     }));
     it('Calling images endpoint without providing height paramaters with correct value should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/api/images?name=fjord&width=300&height=30-').expect(400);
+        yield request
+            .get('/api/images?name=fjord&width=300&height=30-')
+            .expect(400);
     }));
     it('Calling images endpoint without providing width paramaters with correct value should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
         yield request.get('/api/images?name=fjrd&width=30-0&height=30').expect(400);
     }));
     it('Calling images endpoint with width paramaters bigger than 999 should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/api/images?name=fjord&width=999999&height=30').expect(400);
+        yield request
+            .get('/api/images?name=fjord&width=999999&height=30')
+            .expect(400);
     }));
     it('Calling images endpoint with width paramaters smaller than 1 should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
         yield request.get('/api/images?name=fjord&width=0&height=30').expect(400);
     }));
     it('Calling images endpoint with height paramaters bigger than 999 should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/api/images?name=fjord&width=99&height=9990').expect(400);
+        yield request
+            .get('/api/images?name=fjord&width=99&height=9990')
+            .expect(400);
     }));
     it('Calling images endpoint with height paramaters smaller than 1 should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
         yield request.get('/api/images?name=fjord&width=99&height=0').expect(400);
     }));
     it('Calling images endpoint without providing existing name should returns 400', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/api/images?name=jushdsrd&width=300&height=300').expect(404);
+        yield request
+            .get('/api/images?name=jushdsrd&width=300&height=300')
+            .expect(404);
     }));
     it('Calling images endpoint with correct paramater values should returns 200', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/api/images?name=fjord&width=300&height=300').expect(200);
+        yield request
+            .get('/api/images?name=fjord&width=300&height=300')
+            .expect(200);
     }));
 });

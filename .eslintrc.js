@@ -1,6 +1,6 @@
 module.exports = {
     "env": {
-        "browser": true,
+        "node": true,
         "es2021": true
     },
     "extends": [
@@ -19,6 +19,6 @@ module.exports = {
         "@typescript-eslint", "prettier"
     ],
     "rules": {
-        'prettier/prettier': 1,
+        'prettier/prettier': 1
     }
 }

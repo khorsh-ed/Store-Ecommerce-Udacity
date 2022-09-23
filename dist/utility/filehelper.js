@@ -16,12 +16,12 @@ const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 function getFileNames(thumb) {
     return __awaiter(this, void 0, void 0, function* () {
-        let imgNames = [];
-        let folderName = (thumb) ? 'thumb' : 'full';
+        const imgNames = [];
+        const folderName = thumb ? 'thumb' : 'full';
         const filePath = path_1.default.resolve('./.') + `/src/assets/${folderName}`;
         try {
             const filenames = yield fs_1.promises.readdir(filePath);
-            for (let filename of filenames) {
+            for (const filename of filenames) {
                 imgNames.push(filename.slice(0, -4));
             }
         }
@@ -31,5 +31,4 @@ function getFileNames(thumb) {
         return imgNames;
     });
 }
-;
 exports.default = getFileNames;

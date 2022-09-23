@@ -14,9 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const filehelper_1 = __importDefault(require("../filehelper"));
 const resize_1 = __importDefault(require("../resize"));
-function isNumber(value) {
-    return (!isNaN(Number(value)) && (Number(value) >= 1 && Number(value) <= 999));
-}
 const imageProcessing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const imageName = req.query.name;
     const imageWidth = req.query.width;
@@ -24,9 +21,9 @@ const imageProcessing = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     const thumbFileNames = yield (0, filehelper_1.default)(true);
     // handling cashing check if it is already included in cashed folder
     if (thumbFileNames.includes(`${imageName}_${imageWidth}_${imageHeight}`)) {
-        next();
+        return next();
     }
-    // resizing the image 
+    // resizing the image
     yield (0, resize_1.default)(imageName, +imageWidth, +imageHeight);
     next();
 });

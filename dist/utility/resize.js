@@ -20,9 +20,10 @@ function resizeImage(imgName, width, height) {
         const resizedImageName = `${imgName}_${width}_${height}`;
         const imgResizedLocation = path_1.default.resolve('./') + `/src/assets/thumb/${resizedImageName}.jpg`;
         try {
-            yield (0, sharp_1.default)(imgLocation).resize({
+            yield (0, sharp_1.default)(imgLocation)
+                .resize({
                 width: width,
-                height: height
+                height: height,
             })
                 .toFile(imgResizedLocation);
         }
@@ -32,5 +33,4 @@ function resizeImage(imgName, width, height) {
         return resizedImageName;
     });
 }
-;
 exports.default = resizeImage;

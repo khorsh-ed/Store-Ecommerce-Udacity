@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src/*.ts",
-    "lint:f": "eslint src/*.ts --fix",
+    "lint": "eslint src/**/*.ts",
+    "lint:f": "eslint src/**/*.ts --fix",
     "jasmine": "jasmine",
     "start": "nodemon src/index.ts",
+    "prettier": "prettier --write src/**/*.ts",
     "test": "npm run build && npm run jasmine"
   },
   "keywords": [],
