@@ -1,12 +1,10 @@
-import express from 'express';
-import images from './api/images';
-import { Request, Response } from 'express';
-const routes = express.Router();
+import { Router } from "express";
+import userRoutes from './api/user.routes'
+import productRoutes from '../routes/api/product.routes'
+import orderRoutes from './api/order.routes'
+const routes = Router();
 
-routes.get('/', (req: Request, res: Response) => {
-  res.send('Udacity Image Processing Project');
-});
-
-routes.use('/images', images);
-
+routes.use('/users' , userRoutes);
+routes.use('/products' , productRoutes);
+routes.use('/orders' , orderRoutes);
 export default routes;
