@@ -5,10 +5,10 @@ import AuthenticateMiddleware from "../../utility/middleware/authentication";
 const products = Router();
 
 products.post('/',handler.create);
-products.route('/').get(handler.getAll)
-products.route('/').patch(handler.updateItem)
-products.route('/:id').get(handler.getItem)
-products.route('/:id').delete(handler.deleteItem)
+products.route('/').get(AuthenticateMiddleware,handler.getAll)
+products.route('/').patch(AuthenticateMiddleware,handler.updateItem)
+products.route('/:id').get(AuthenticateMiddleware,handler.getItem)
+products.route('/:id').delete(AuthenticateMiddleware,handler.deleteItem)
 
 
 export default products;
