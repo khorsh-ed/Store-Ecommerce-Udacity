@@ -8,52 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const user_1 = require("../user");
-const userStore = new user_1.UserStore();
-const user = {
-    email: 'abdallah@google.com',
-    password: 'password123',
-    first_name: 'abdallah',
-    last_name: 'abdelkader'
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-let addedUser;
+Object.defineProperty(exports, "__esModule", { value: true });
+const order_1 = __importDefault(require("../order"));
+const orderStore = new order_1.default();
+const order = {
+    status: 'inprogress',
+    user_id: 1
+};
+let addedOrder;
 describe('Testing User Store', () => {
     it('Creation method should be defined', () => {
-        expect(userStore.create).toBeDefined();
+        expect(orderStore.create).toBeDefined();
     });
     it('Testing Creation method', () => __awaiter(void 0, void 0, void 0, function* () {
-        addedUser = yield userStore.create(user);
-        expect(user.email).toEqual(addedUser.email);
-        expect(user.first_name).toEqual(addedUser.first_name);
-        expect(user.last_name).toEqual(addedUser.last_name);
+        addedOrder = yield orderStore.create(order);
+        expect(order.status).toEqual(addedOrder.status);
     }));
     it('Get method should be defined', () => {
-        expect(userStore.getItem).toBeDefined();
+        expect(orderStore.getItem).toBeDefined();
     });
     it('Get Item for exisiting item should not be null', () => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield userStore.getItem(addedUser.id);
-        expect(user.id).toEqual(addedUser.id);
+        const user = yield orderStore.getItem(addedOrder.id);
+        expect(user.id).toEqual(addedOrder.id);
     }));
     it('Get All method should be defined', () => {
-        expect(userStore.getAll).toBeDefined();
+        expect(orderStore.getAll).toBeDefined();
     });
     it('Testing get all method', () => __awaiter(void 0, void 0, void 0, function* () {
-        const users = yield userStore.getAll();
-        expect(users.slice(-1)[0].id).toEqual(addedUser.id);
+        const users = yield orderStore.getAll();
+        expect(users.slice(-1)[0].id).toEqual(addedOrder.id);
     }));
     it('Update method should be defined', () => {
-        expect(userStore.updateItem).toBeDefined();
+        expect(orderStore.updateItem).toBeDefined();
     });
     it('Testing the update method', () => __awaiter(void 0, void 0, void 0, function* () {
-        const updatedUser = yield userStore.updateItem(Object.assign(Object.assign({}, addedUser), { email: 'Hussam' }));
-        expect(updatedUser.email).toBe('Hussam');
+        const updatedUser = yield orderStore.updateItem(Object.assign(Object.assign({}, addedOrder), { status: 'in prog' }));
+        expect(updatedUser.status).toBe('in prog');
     }));
     it('Deletion method should be defined', () => {
-        expect(userStore.deleteItem).toBeDefined();
+        expect(orderStore.deleteItem).toBeDefined();
     });
     it('Testing the delete method', () => __awaiter(void 0, void 0, void 0, function* () {
-        const deletedUser = yield userStore.deleteItem(addedUser.id);
-        expect(deletedUser.id).toEqual(addedUser.id);
+        const deletedUser = yield orderStore.deleteItem(addedOrder.id);
+        expect(deletedUser.id).toEqual(addedOrder.id);
     }));
 });

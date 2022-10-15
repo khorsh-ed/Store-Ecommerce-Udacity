@@ -16,7 +16,6 @@ exports.deleteItem = exports.updateItem = exports.getItem = exports.getAll = exp
 const product_1 = __importDefault(require("../models/product"));
 const productStore = new product_1.default();
 const create = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('haada');
     try {
         const product = yield productStore.create(request.body);
         response.json({
@@ -46,7 +45,7 @@ const getAll = (request, response, next) => __awaiter(void 0, void 0, void 0, fu
 exports.getAll = getAll;
 const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product = yield productStore.getOne(+request.params.id);
+        const product = yield productStore.getItem(+request.params.id);
         response.json({
             status: 'success',
             data: Object.assign({}, product),
@@ -60,7 +59,7 @@ const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, f
 exports.getItem = getItem;
 const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product = yield productStore.updateOne(request.body);
+        const product = yield productStore.updateItem(request.body);
         response.json({
             status: 'success',
             data: product,
@@ -75,7 +74,7 @@ const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0
 exports.updateItem = updateItem;
 const deleteItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield productStore.deleteOne(+request.params.id);
+        const user = yield productStore.deleteItem(+request.params.id);
         response.json({
             status: 'success',
             data: Object.assign({}, user),

@@ -48,7 +48,7 @@ const getAll = (request, response, next) => __awaiter(void 0, void 0, void 0, fu
 exports.getAll = getAll;
 const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield userStore.getOne(+request.params.id);
+        const user = yield userStore.getItem(+request.params.id);
         console.log(user);
         response.json({
             status: 'success',
@@ -64,7 +64,7 @@ exports.getItem = getItem;
 const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(request.body);
-        const user = yield userStore.updateOne(request.body);
+        const user = yield userStore.updateItem(request.body);
         response.json({
             status: 'success',
             data: user,
@@ -79,7 +79,7 @@ const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0
 exports.updateItem = updateItem;
 const deleteItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield userStore.deleteOne(+request.params.id);
+        const user = yield userStore.deleteItem(+request.params.id);
         response.json({
             status: 'success',
             data: Object.assign({}, user),

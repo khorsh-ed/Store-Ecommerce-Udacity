@@ -25,7 +25,7 @@ class OrderStore {
                 return results.rows;
             }
             catch (err) {
-                throw new Error(`could not retrieve products ${err}`);
+                throw new Error(`could not retrieve orders ${err}`);
             }
         });
     }
@@ -58,7 +58,7 @@ class OrderStore {
             }
         });
     }
-    getOne(id) {
+    getItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = `SELECT * FROM orders 
@@ -70,11 +70,11 @@ class OrderStore {
             }
             catch (error) {
                 console.log(error);
-                throw new Error(`Could not find user ${id}, ${error.message}`);
+                throw new Error(`Could not find order ${id}, ${error.message}`);
             }
         });
     }
-    updateOne(order) {
+    updateItem(order) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
@@ -89,11 +89,11 @@ class OrderStore {
                 return result.rows[0];
             }
             catch (error) {
-                throw new Error(`Could not update user, ${error.message}`);
+                throw new Error(`Could not update order, ${error.message}`);
             }
         });
     }
-    deleteOne(id) {
+    deleteItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
@@ -106,7 +106,7 @@ class OrderStore {
                 return result.rows[0];
             }
             catch (error) {
-                throw new Error(`Could not delete user ${id}, ${error.message}`);
+                throw new Error(`Could not delete order ${id}, ${error.message}`);
             }
         });
     }

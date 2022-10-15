@@ -27,7 +27,7 @@ export class ProductStore
         }
     }
 
-    async create(product: Product): Promise<Product[]>{
+    async create(product: Product): Promise<Product>{
         try{
              const conn = await client.connect();
              const sql = `INSERT INTO products(name , price)

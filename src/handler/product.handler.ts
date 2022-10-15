@@ -6,8 +6,6 @@ import config from '../../configuration'
 const productStore = new ProductStore();
 
 export const create = async (request:Request , response :Response , next:NextFunction) => {
-
-  console.log('haada')
     
     try {
         const product = await productStore.create(request.body);

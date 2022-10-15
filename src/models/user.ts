@@ -29,12 +29,11 @@ export class UserStore
         }
     }
 
-    async create(user: User): Promise<User[]>{
+    async create(user: User): Promise<User>{
         try{
              const conn = await client.connect();
              const hashedPassword = hashPassword(user);
 
-           console.log(hashedPassword);
              const sql = `INSERT INTO users(email , password , first_name , last_name)
                           VALUES($1, $2 , $3 , $4) RETURNING *`;
              const results = await conn.query(sql,[user.email , hashedPassword , user.first_name , user.last_name]);

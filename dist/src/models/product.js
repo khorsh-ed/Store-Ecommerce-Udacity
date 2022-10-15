@@ -40,7 +40,7 @@ class ProductStore {
                 return results.rows[0];
             }
             catch (error) {
-                throw new Error(`Could not create new user ${error.message}`);
+                throw new Error(`Could not create new product ${error.message}`);
             }
         });
     }
@@ -58,7 +58,7 @@ class ProductStore {
             }
         });
     }
-    getOne(id) {
+    getItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = `SELECT id, name, price FROM products 
@@ -74,7 +74,7 @@ class ProductStore {
             }
         });
     }
-    updateOne(product) {
+    updateItem(product) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
@@ -83,7 +83,7 @@ class ProductStore {
                   WHERE id=$1
                   RETURNING id, name , price`;
                 const result = yield conn.query(sql, [
-                    product.name, product.price, product.id,
+                    product.id, product.name, product.price,
                 ]);
                 conn.release();
                 return result.rows[0];
@@ -93,7 +93,7 @@ class ProductStore {
             }
         });
     }
-    deleteOne(id) {
+    deleteItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();

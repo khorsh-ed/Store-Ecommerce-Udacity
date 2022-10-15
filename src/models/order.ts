@@ -26,7 +26,7 @@ export class OrderStore
         }
     }
 
-    async create(order: Order): Promise<Order[]>{
+    async create(order: Order): Promise<Order>{
         try{
              const conn = await client.connect();
              const sql = `INSERT INTO orders(status , user_id)

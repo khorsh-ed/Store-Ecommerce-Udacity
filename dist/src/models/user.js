@@ -37,7 +37,6 @@ class UserStore {
             try {
                 const conn = yield database_1.default.connect();
                 const hashedPassword = (0, hash_1.default)(user);
-                console.log(hashedPassword);
                 const sql = `INSERT INTO users(email , password , first_name , last_name)
                           VALUES($1, $2 , $3 , $4) RETURNING *`;
                 const results = yield conn.query(sql, [user.email, hashedPassword, user.first_name, user.last_name]);
@@ -63,7 +62,7 @@ class UserStore {
             }
         });
     }
-    getOne(id) {
+    getItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = `SELECT id, email, first_name, last_name FROM users 
@@ -79,7 +78,7 @@ class UserStore {
             }
         });
     }
-    updateOne(user) {
+    updateItem(user) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
@@ -88,7 +87,7 @@ class UserStore {
                   WHERE id=$1
                   RETURNING id, email, first_name, last_name`;
                 const result = yield conn.query(sql, [
-                    user.email, user.first_name, user.last_name, user.password, user.id,
+                    user.id, user.email, user.first_name, user.last_name, user.password,
                 ]);
                 conn.release();
                 return result.rows[0];
@@ -98,7 +97,7 @@ class UserStore {
             }
         });
     }
-    deleteOne(id) {
+    deleteItem(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();

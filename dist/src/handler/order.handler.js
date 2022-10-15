@@ -45,7 +45,7 @@ const getAll = (request, response, next) => __awaiter(void 0, void 0, void 0, fu
 exports.getAll = getAll;
 const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const order = yield orderStore.getOne(+request.params.id);
+        const order = yield orderStore.getItem(+request.params.id);
         response.json({
             status: 'success',
             data: Object.assign({}, order),
@@ -59,7 +59,7 @@ const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, f
 exports.getItem = getItem;
 const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const product = yield orderStore.updateOne(request.body);
+        const product = yield orderStore.updateItem(request.body);
         response.json({
             status: 'success',
             data: product,
@@ -74,7 +74,7 @@ const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0
 exports.updateItem = updateItem;
 const deleteItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const order = yield orderStore.deleteOne(+request.params.id);
+        const order = yield orderStore.deleteItem(+request.params.id);
         response.json({
             status: 'success',
             data: Object.assign({}, order),
