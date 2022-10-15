@@ -22,13 +22,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const handler = __importStar(require("../../handler/order.handler"));
+const authentication_1 = __importDefault(require("../../utility/middleware/authentication"));
 const products = (0, express_1.Router)();
 products.post('/', handler.create);
-products.route('/').get(handler.getAll);
-products.route('/').patch(handler.updateItem);
-products.route('/:id').get(handler.getItem);
-products.route('/:id').delete(handler.deleteItem);
+products.route('/').get(authentication_1.default, handler.getAll);
+products.route('/').patch(authentication_1.default, handler.updateItem);
+products.route('/:id').get(authentication_1.default, handler.getItem);
+products.route('/:id').delete(authentication_1.default, handler.deleteItem);
 exports.default = products;
