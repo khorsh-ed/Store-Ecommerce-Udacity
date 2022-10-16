@@ -10,7 +10,7 @@
     "jasmine": "jasmine",
     "start": "nodemon src/index.ts",
     "prettier": "prettier --write src/**/*.ts",
-    "test": "ENV=test db-migrate --env test up && jasmine && db-migrate db:drop test"
+    "test": "set ENV=test db-migrate --env test up && jasmine && db-migrate db:drop test"
   },
   "keywords": [],
   "author": "",

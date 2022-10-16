@@ -26,19 +26,58 @@ products
 
 ## Data Shapes
 #### Product
--  id
-- name
-- price
+                                      Table "public.users"
+   Column   |          Type          | Collation | Nullable |              Default
+------------+------------------------+-----------+----------+-----------------------------------
+ id         | integer                |           | not null | nextval('users_id_seq'::regclass)
+ email      | character varying(100) |           |          |
+ password   | character varying(100) |           | not null |
+ first_name | character varying(100) |           | not null |
+ last_name  | character varying(100) |           | not null |
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+    "users_email_key" UNIQUE CONSTRAINT, btree (email)
+Referenced by:
+    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
 
 
 #### User
-- id
--email
-- firstName
-- lastName
-- password
+                                      Table "public.users"
+   Column   |          Type          | Collation | Nullable |              Default
+------------+------------------------+-----------+----------+-----------------------------------
+ id         | integer                |           | not null | nextval('users_id_seq'::regclass)
+ email      | character varying(100) |           |          |
+ password   | character varying(100) |           | not null |
+ first_name | character varying(100) |           | not null |
+ last_name  | character varying(100) |           | not null |
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+    "users_email_key" UNIQUE CONSTRAINT, btree (email)
+Referenced by:
+    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
+#### Products
+                                  Table "public.products"
+ Column |          Type          | Collation | Nullable |               Default
+--------+------------------------+-----------+----------+--------------------------------------
+ id     | integer                |           | not null | nextval('products_id_seq'::regclass)
+ name   | character varying(100) |           | not null |
+ price  | integer                |           | not null |
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
 
 #### Orders
-- id
-- status of order (active or complete)
-- user_id
+                                    Table "public.orders"
+ Column  |          Type          | Collation | Nullable |              Default
+---------+------------------------+-----------+----------+------------------------------------
+ id      | integer                |           | not null | nextval('orders_id_seq'::regclass)
+ status  | character varying(100) |           |          |
+ user_id | bigint                 |           |          |
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)

@@ -1,13 +1,13 @@
 import { Router } from "express";
 import * as handler from '../../handler/order.handler'
 import AuthenticateMiddleware from "../../utility/middleware/authentication";
-const products = Router();
+const order = Router();
 
-products.post('/',handler.create);
-products.route('/').get(AuthenticateMiddleware,handler.getAll)
-products.route('/').patch(AuthenticateMiddleware,handler.updateItem)
-products.route('/:id').get(AuthenticateMiddleware,handler.getItem)
-products.route('/:id').delete(AuthenticateMiddleware,handler.deleteItem)
+order.post('/',handler.create);
+order.route('/').get(AuthenticateMiddleware,handler.getAll)
+order.route('/').patch(AuthenticateMiddleware,handler.updateItem)
+order.route('/:id').get(AuthenticateMiddleware,handler.getItem)
+order.route('/:id').delete(AuthenticateMiddleware,handler.deleteItem)
 
 
-export default products;
+export default order;

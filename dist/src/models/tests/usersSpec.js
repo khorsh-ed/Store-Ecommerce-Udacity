@@ -8,17 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../user");
+const database_1 = __importDefault(require("../../database"));
 const userStore = new user_1.UserStore();
 const user = {
-    email: 'abdallah@google.com',
-    password: 'password123',
+    email: 'abdullah@google.com',
+    password: 'pass',
     first_name: 'abdallah',
     last_name: 'abdelkader'
 };
 let addedUser;
 describe('Testing User Store', () => {
+    afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        const connection = yield database_1.default.connect();
+        const Usersql = 'DELETE FROM users;';
+        yield connection.query(Usersql);
+        connection.release();
+    }));
     it('Creation method should be defined', () => {
         expect(userStore.create).toBeDefined();
     });

@@ -3,8 +3,8 @@ import client from '../../database'
 const userStore = new UserStore();
 import hash from '../../utility/hash';
 const user = {
-  email: 'abdallah@google.com',
-  password: 'password123',
+  email: 'abdullah@google.com',
+  password: 'pass',
   first_name: 'abdallah',
   last_name: 'abdelkader'
 } as User;
@@ -12,6 +12,13 @@ let addedUser: User;
 
 describe('Testing User Store', () => {
 
+
+   afterAll(async () => {
+    const connection = await client.connect()
+    const Usersql = 'DELETE FROM users;'
+    await connection.query(Usersql);
+    connection.release();
+  })
 
     it('Creation method should be defined', () => {
       expect(userStore.create).toBeDefined()

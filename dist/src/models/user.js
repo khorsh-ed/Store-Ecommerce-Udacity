@@ -44,7 +44,7 @@ class UserStore {
                 return results.rows[0];
             }
             catch (error) {
-                throw new Error(`Could not create new user ${error.message}`);
+                throw new Error(`=>>>> Could not create new user ${error.message}`);
             }
         });
     }
