@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS orders(
 
 ### package installation
 bycrypt
-jwt
+jsonwebtoken
 
 ## Env Variable
 POSTGRES_HOST 
