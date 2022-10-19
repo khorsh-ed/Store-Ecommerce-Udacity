@@ -9,6 +9,13 @@ export type Order={
     user_id:Number
 }
 
+export type OrderProduct={
+  id: Number;
+  quantity: Number;
+  order_id:Number;
+  product_id:Number;
+}
+
 export class OrderStore
 {
     async index(): Promise<Order[]>{
@@ -103,6 +110,20 @@ export class OrderStore
     } catch (error) {
       throw new Error(
         `Could not delete order ${id}, ${(error as Error).message}`
+      )
+    }
+  }
+
+  async addProduct(quantity: Number , orderId :Number , productId: Number): Promise<OrderProduct> {
+    try {
+      const conn = await client.connect()
+      const sql = `INSERT INTO order_products(quantity , order_id , product_id) VALUES ($1,$2,$3) RETURNING *`
+      const result = await conn.query(sql, [quantity, orderId , productId])
+      conn.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(
+        `Could not add product ${productId}, ${(error as Error).message}`
       )
     }
   }

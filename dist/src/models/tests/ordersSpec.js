@@ -15,8 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../../database"));
 const order_1 = __importDefault(require("../order"));
 const user_1 = __importDefault(require("../user"));
+const product_1 = __importDefault(require("../product"));
 const orderStore = new order_1.default();
 const userStore = new user_1.default();
+const productStore = new product_1.default();
 const user = {
     email: 'abdullah1@google.com',
     password: 'password123',
@@ -26,14 +28,24 @@ const user = {
 const order = {
     status: 'inprogress',
 };
+const product = {
+    name: 'apple',
+    price: 12
+};
 let addedOrder;
 let addedUser;
+let addedProduct;
+let addedOrderProduct;
 describe('Testing Order Store', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            // added user
             const createdUser = yield userStore.create(user);
             user.id = createdUser.id;
             order.user_id = user.id;
+            // added product
+            const createdProduct = yield productStore.create(product);
+            product.id = createdProduct.id;
         }
         catch (err) {
             console.log(err);
@@ -41,10 +53,14 @@ describe('Testing Order Store', () => {
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         const connection = yield database_1.default.connect();
-        const Usersql = 'DELETE FROM users;';
-        yield connection.query(Usersql);
+        const orderProductSql = 'DELETE FROM order_products;';
+        yield connection.query(orderProductSql);
         const Ordersql = 'DELETE FROM orders;';
         yield connection.query(Ordersql);
+        const Usersql = 'DELETE FROM users;';
+        yield connection.query(Usersql);
+        const Productsql = 'DELETE FROM products;';
+        yield connection.query(Productsql);
         connection.release();
     }));
     it('Order method should be defined', () => {
@@ -75,10 +91,19 @@ describe('Testing Order Store', () => {
         const updatedOrder = yield orderStore.updateItem(Object.assign(Object.assign({}, addedOrder), { status: 'in prog' }));
         expect(updatedOrder.status).toBe('in prog');
     }));
+    it('add product method should be defined', () => {
+        expect(orderStore.addProduct).toBeDefined();
+    });
+    it('Testing the add product method', () => __awaiter(void 0, void 0, void 0, function* () {
+        addedOrderProduct = yield orderStore.addProduct(20, addedOrder.id, product.id);
+        expect(+addedOrderProduct.order_id).toEqual(+addedOrder.id);
+        expect(+addedOrderProduct.product_id).toEqual(+product.id);
+    }));
     it('Deletion method should be defined', () => {
         expect(orderStore.deleteItem).toBeDefined();
     });
     it('Testing the delete method', () => __awaiter(void 0, void 0, void 0, function* () {
+        addedOrderProduct = yield orderStore.addProduct(20, addedOrder.id, product.id);
         const deletedOrder = yield orderStore.deleteItem(addedOrder.id);
         expect(deletedOrder.id).toEqual(addedOrder.id);
     }));

@@ -4,7 +4,7 @@ import UserStore from "../../models/user";
 import AuthenticateMiddleware from "../../utility/middleware/authentication";
 const products = Router();
 
-products.post('/',handler.create);
+products.post('/',AuthenticateMiddleware,handler.create);
 products.route('/').get(AuthenticateMiddleware,handler.getAll)
 products.route('/').patch(AuthenticateMiddleware,handler.updateItem)
 products.route('/:id').get(AuthenticateMiddleware,handler.getItem)

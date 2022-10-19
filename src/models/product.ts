@@ -63,7 +63,7 @@ export class ProductStore
       conn.release()
       return result.rows[0]
     } catch (error) {
-        console.log(error)
+       
       throw new Error(`Could not find user ${id}, ${(error as Error).message}`)
     }
   }

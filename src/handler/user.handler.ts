@@ -1,20 +1,24 @@
 import { NextFunction, Request , Response } from "express";
-import UserStore from "../models/user";
+import UserStore, { User } from "../models/user";
 import jwt from 'jsonwebtoken'
 import config from '../../configuration'
 
 const userStore = new UserStore();
 
+
+
 export const create = async (request:Request , response :Response , next:NextFunction) => {
     
     try {
-        console.log(request.body);
         const user = await userStore.create(request.body);
-        response.json({
-            status:'success',
-            data:{...user},
-            message: 'a user has been created!',
-        })
+        const token = jwt.sign({ user },config.token as unknown as string)
+
+      response.json({
+        status:'success',
+        data:{...user},
+        token: token,
+        message: 'a user has been created!',
+    })
 
     }
     catch(error){
@@ -52,7 +56,7 @@ export const getAll = async ( request: Request,response: Response,next: NextFunc
   
   export const updateItem = async ( request: Request,response: Response,next: NextFunction) => { 
     try {
-        console.log(request.body)
+      
       const user = await userStore.updateItem(request.body)
       response.json({
         status: 'success',
@@ -60,7 +64,7 @@ export const getAll = async ( request: Request,response: Response,next: NextFunc
         message: 'User has been updated!',
       })
     } catch (error) {
-        console.log(error)
+  
       next(error)
     }
   }

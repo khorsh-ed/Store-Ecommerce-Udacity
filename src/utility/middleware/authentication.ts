@@ -7,7 +7,7 @@ import config from '../../../configuration'
 
 const handleUnauthorizedUser = (response: Response) => {
   response
-      .status(400)
+      .status(401)
       .send(
         '<h2> Login again please <h2>'
       );

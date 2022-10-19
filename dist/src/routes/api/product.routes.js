@@ -30,7 +30,7 @@ const express_1 = require("express");
 const handler = __importStar(require("../../handler/product.handler"));
 const authentication_1 = __importDefault(require("../../utility/middleware/authentication"));
 const products = (0, express_1.Router)();
-products.post('/', handler.create);
+products.post('/', authentication_1.default, handler.create);
 products.route('/').get(authentication_1.default, handler.getAll);
 products.route('/').patch(authentication_1.default, handler.updateItem);
 products.route('/:id').get(authentication_1.default, handler.getItem);

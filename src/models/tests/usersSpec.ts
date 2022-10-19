@@ -2,6 +2,7 @@ import {User , UserStore} from '../user'
 import client from '../../database'
 const userStore = new UserStore();
 import hash from '../../utility/hash';
+
 const user = {
   email: 'abdullah@google.com',
   password: 'pass',

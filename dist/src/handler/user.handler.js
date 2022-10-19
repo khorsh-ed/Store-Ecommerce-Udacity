@@ -19,11 +19,12 @@ const configuration_1 = __importDefault(require("../../configuration"));
 const userStore = new user_1.default();
 const create = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(request.body);
         const user = yield userStore.create(request.body);
+        const token = jsonwebtoken_1.default.sign({ user }, configuration_1.default.token);
         response.json({
             status: 'success',
             data: Object.assign({}, user),
+            token: token,
             message: 'a user has been created!',
         });
     }
@@ -63,7 +64,6 @@ const getItem = (request, response, next) => __awaiter(void 0, void 0, void 0, f
 exports.getItem = getItem;
 const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(request.body);
         const user = yield userStore.updateItem(request.body);
         response.json({
             status: 'success',
@@ -72,7 +72,6 @@ const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0
         });
     }
     catch (error) {
-        console.log(error);
         next(error);
     }
 });

@@ -7,7 +7,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const configuration_1 = __importDefault(require("../../../configuration"));
 const handleUnauthorizedUser = (response) => {
     response
-        .status(400)
+        .status(401)
         .send('<h2> Login again please <h2>');
 };
 const AuthenticateMiddleware = (request, response, next) => {

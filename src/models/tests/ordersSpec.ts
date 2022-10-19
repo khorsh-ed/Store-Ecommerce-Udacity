@@ -1,9 +1,11 @@
 import client from '../../database'
-import OrderStore, { Order } from '../order';
+import OrderStore, { Order, OrderProduct } from '../order';
 import UserStore, { User } from '../user';
+import ProductStore, { Product} from '../product';
 
 const orderStore = new OrderStore();
 const userStore = new UserStore();
+const productStore = new ProductStore();
 
 const user = {
   email: 'abdullah1@google.com',
@@ -16,18 +18,33 @@ const order = {
   status: 'inprogress',
 } as unknown as Order;
 
+const product = {
+  name:'apple',
+  price: 12
+} as unknown as Product;
+
 let addedOrder: Order;
 let addedUser: User;
+let addedProduct: Product;
+let addedOrderProduct: OrderProduct;
 
 describe('Testing Order Store', () => {
 
-
   beforeAll(async () => {
-    try{
+
+    try
+    {
+
+    // added user
     const createdUser = await userStore.create(user)
-    user.id = createdUser.id
-    order.user_id = user.id
+    user.id = createdUser.id;
+    order.user_id = user.id;
+
+    // added product
+    const createdProduct = await productStore.create(product);
+    product.id = createdProduct.id;
     }
+
     catch(err)
     {
       console.log(err)
@@ -36,10 +53,14 @@ describe('Testing Order Store', () => {
 
   afterAll(async () => {
     const connection = await client.connect()
-    const Usersql = 'DELETE FROM users;'
-    await connection.query(Usersql);
+    const orderProductSql = 'DELETE FROM order_products;'
+    await connection.query(orderProductSql);
     const Ordersql = 'DELETE FROM orders;'
     await connection.query(Ordersql);
+    const Usersql = 'DELETE FROM users;'
+    await connection.query(Usersql);
+    const Productsql = 'DELETE FROM products;'
+    await connection.query(Productsql);
     connection.release()
   })
 
@@ -87,16 +108,25 @@ describe('Testing Order Store', () => {
       expect(updatedOrder.status).toBe('in prog');
     });
 
+    
+    it('add product method should be defined', () => {
+      expect(orderStore.addProduct).toBeDefined();
+    })
 
+    it('Testing the add product method', async () => {
+      addedOrderProduct = await orderStore.addProduct(20,addedOrder.id,product.id);
+      expect(+addedOrderProduct.order_id).toEqual(+addedOrder.id);
+      expect(+addedOrderProduct.product_id).toEqual(+product.id);
+    });
+
+    
     it('Deletion method should be defined', () => {
       expect(orderStore.deleteItem).toBeDefined();
     })
-
-  
+    
     it('Testing the delete method', async () => {
+      addedOrderProduct = await orderStore.addProduct(20,addedOrder.id,product.id);
       const deletedOrder = await orderStore.deleteItem(addedOrder.id);
       expect(deletedOrder.id).toEqual(addedOrder.id);
     });
-
-
   })

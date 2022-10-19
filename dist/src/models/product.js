@@ -69,7 +69,6 @@ class ProductStore {
                 return result.rows[0];
             }
             catch (error) {
-                console.log(error);
                 throw new Error(`Could not find user ${id}, ${error.message}`);
             }
         });

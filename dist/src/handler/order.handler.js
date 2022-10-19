@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteItem = exports.updateItem = exports.getItem = exports.getAll = exports.create = void 0;
+exports.addProduct = exports.deleteItem = exports.updateItem = exports.getItem = exports.getAll = exports.create = void 0;
 const order_1 = __importDefault(require("../models/order"));
 const orderStore = new order_1.default();
 const create = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -67,7 +67,6 @@ const updateItem = (request, response, next) => __awaiter(void 0, void 0, void 0
         });
     }
     catch (error) {
-        console.log(error);
         next(error);
     }
 });
@@ -86,3 +85,20 @@ const deleteItem = (request, response, next) => __awaiter(void 0, void 0, void 0
     }
 });
 exports.deleteItem = deleteItem;
+const addProduct = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orderId = +request.params.id;
+        const productId = +request.body.productId;
+        const quantity = +request.body.quantity;
+        const orderProduct = yield orderStore.addProduct(quantity, orderId, productId);
+        response.json({
+            status: 'success',
+            data: Object.assign({}, orderProduct),
+            message: 'Product has been added!',
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+exports.addProduct = addProduct;

@@ -25,21 +25,6 @@ products
 - Create (args: User)[token required] -> http://localhost:3000/api/orders
 
 ## Data Shapes
-#### Product
-                                      Table "public.users"
-   Column   |          Type          | Collation | Nullable |              Default
-------------+------------------------+-----------+----------+-----------------------------------
- id         | integer                |           | not null | nextval('users_id_seq'::regclass)
- email      | character varying(100) |           |          |
- password   | character varying(100) |           | not null |
- first_name | character varying(100) |           | not null |
- last_name  | character varying(100) |           | not null |
-Indexes:
-    "users_pkey" PRIMARY KEY, btree (id)
-    "users_email_key" UNIQUE CONSTRAINT, btree (email)
-Referenced by:
-    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
-
 
 #### User
                                       Table "public.users"
@@ -69,7 +54,7 @@ Referenced by:
     TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
 
 #### Orders
-                                    Table "public.orders"
+                                     Table "public.orders"
  Column  |          Type          | Collation | Nullable |              Default
 ---------+------------------------+-----------+----------+------------------------------------
  id      | integer                |           | not null | nextval('orders_id_seq'::regclass)
@@ -78,6 +63,18 @@ Referenced by:
 Indexes:
     "orders_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
-    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
-Referenced by:
-    TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    
+#### Order_Products
+                              Table "public.order_products"
+   Column   |  Type   | Collation | Nullable |                  Default
+------------+---------+-----------+----------+--------------------------------------------
+ id         | integer |           | not null | nextval('order_products_id_seq'::regclass)
+ quantity   | integer |           | not null |
+ order_id   | bigint  |           |          |
+ product_id | bigint  |           |          |
+Indexes:
+    "order_products_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+    "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE

@@ -1,5 +1,5 @@
 import { NextFunction, Request , Response } from "express";
-import OrderStore from "../models/order";
+import OrderStore, { OrderProduct } from "../models/order";
 import jwt from 'jsonwebtoken'
 import config from '../../configuration'
 
@@ -57,7 +57,6 @@ export const getAll = async ( request: Request,response: Response,next: NextFunc
         message: 'Order has been updated!',
       })
     } catch (error) {
-        console.log(error)
       next(error)
     }
   }
@@ -74,3 +73,21 @@ export const getAll = async ( request: Request,response: Response,next: NextFunc
       next(error)
     }
   }
+
+  export const addProduct = async ( request: Request,response: Response,next: NextFunction) =>  {
+    try {
+      const orderId: Number = +request.params.id;
+      const productId: Number = +request.body.productId;
+      const quantity: Number = +request.body.quantity;
+      const orderProduct: OrderProduct= await orderStore.addProduct(quantity , orderId , productId);
+
+      response.json({
+        status: 'success',
+        data: {...orderProduct},
+        message: 'Product has been added!',
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
